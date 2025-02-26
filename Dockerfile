@@ -14,4 +14,4 @@ RUN pip install flask gunicorn
 EXPOSE $PORT
 
 # Démarrer l'application avec Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
