@@ -19,13 +19,15 @@ jobs:
       - name: Check Heroku CLI version
         run: heroku --version
 
-      # ✅ AUTHENTIFICATION HEROKU (IMPORTANT)
+      # ✅ SE CONNECTER À HEROKU AVEC LA CLÉ API
       - name: Login to Heroku
-        run: echo "${{ secrets.HEROKU_API_KEY }}" | heroku auth:token
+        run: heroku auth:token
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
       # ✅ SE CONNECTER À HEROKU CONTAINER REGISTRY
       - name: Login to Heroku Container Registry
-        run: heroku container:login
+        run: echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
 
       # ✅ CONSTRUIRE ET PUSHER L'IMAGE DOCKER
       - name: Build and Push Docker Image to Heroku
