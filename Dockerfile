@@ -1,6 +1,17 @@
-FROM python:3.13
-COPY . /app
+# Utiliser l'image officielle de Python
+FROM python:3.9-slim
+
+# Définir le répertoire de travail
 WORKDIR /app
-RUN pip install -r requirements.txt
+
+# Copier les fichiers de l'application
+COPY . /app
+
+# Installer les dépendances
+RUN pip install flask gunicorn
+
+# Exposer le port sur lequel l'application va tourner
 EXPOSE $PORT
-CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
+
+# Démarrer l'application avec Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
