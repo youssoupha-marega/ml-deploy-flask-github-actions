@@ -5,27 +5,32 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # ✅ INSTALLATION DU CLI HEROKU
+      # ✅ INSTALLER LE CLI HEROKU
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
+      # ✅ VÉRIFIER LA VERSION DE HEROKU
       - name: Check Heroku CLI version
         run: heroku --version
 
-      # ✅ DEPLOIEMENT DOCKER SUR HEROKU
-      - name: Build, Push and Release a Docker container to Heroku
-        uses: gonuit/heroku-docker-deploy@v1.3.3
-        with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_directory: ./
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
+      # ✅ SE CONNECTER À HEROKU CONTAINER REGISTRY
+      - name: Login to Heroku Container Registry
+        run: heroku container:login
+
+      # ✅ CONSTRUIRE ET PUSHER L'IMAGE DOCKER
+      - name: Build and Push Docker Image to Heroku
+        run: heroku container:push web --app ${{ secrets.HEROKU_APP_NAME }}
+
+      # ✅ LANCER L'IMAGE SUR HEROKU
+      - name: Release Docker Image on Heroku
+        run: heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}
+
+      # ✅ VÉRIFIER LES LOGS HEROKU (OPTIONNEL) #
+      - name: Get Heroku logs
+        run: heroku logs --app ${{ secrets.HEROKU_APP_NAME }} --tail
