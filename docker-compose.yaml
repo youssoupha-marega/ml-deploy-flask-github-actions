@@ -7,7 +7,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    command: gunicorn --workers=4 --bind 0.0.0.0:8000 --reload app:app
+    command: gunicorn --workers=1 --bind 0.0.0.0:8000 --reload app:app
 
 
 
