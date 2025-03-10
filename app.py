@@ -14,9 +14,6 @@ print("Pillow version:", PIL.__version__)
 print(torch.__version__)
 
 
-
-
-### je veux afficher les versions de mon requirement.txt
 app = Flask(__name__)
 
 @app.route('/')
