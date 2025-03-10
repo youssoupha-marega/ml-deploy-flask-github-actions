@@ -7,4 +7,4 @@ transformers==4.49.0
 panel==1.6.1
 openpyxl==3.1.5
 torch==2.6.0
-TikTokApi==3.8.0
+#TikTokApi==3.8.0

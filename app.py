@@ -1,5 +1,6 @@
-from flask import Flask,  jsonify
-from transformers import MgpstrProcessor, MgpstrForSceneTextRecognition
+from flask import Flask
+#from flask import Flask,  jsonify
+#from transformers import MgpstrProcessor, MgpstrForSceneTextRecognition
 #from torch.nn.functional import relu
 
 import torch
