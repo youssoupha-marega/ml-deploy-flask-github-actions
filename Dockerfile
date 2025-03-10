@@ -7,11 +7,11 @@ WORKDIR /app
 # Copier les fichiers de l'application
 COPY . /app
 
-# Installer les dépendances
-RUN pip install flask gunicorn
+# Installation des dépendances
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Exposer le port sur lequel l'application va tourner
 EXPOSE $PORT
 
 # Démarrer l'application avec Gunicorn
-#CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
+CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
